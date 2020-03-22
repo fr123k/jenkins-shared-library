@@ -6,12 +6,14 @@ class SetupWizard implements Serializable {
     def config
     def cascPlugin
     def scriptApproval
-    SetupWizard(config) {this.config = config}
+    SetupWizard(config) {
+        this.config = config
+        this.scriptApproval = new ScriptApprovalUtils()
+        this.cascPlugin = new CascPlugin(config, '/var/jenkins_home/casc-config/')
+    }
     def setup() {
-        scriptApproval  = new ScriptApprovalUtils()
-                            .approveDefaultScripts()
-        cascPlugin      = new CascPlugin(config, '/var/jenkins_home/casc-config/')
-                            .configure()
+        // scriptApproval.approveDefaultScripts()
+        cascPlugin.configure()
 
         //disabling of csrf
         Jenkins.getInstance().setCrumbIssuer(null)
@@ -31,7 +33,7 @@ class SetupWizard implements Serializable {
     }
 
     def getCascPlugin() { return cascPlugin }
-    def getCcriptApproval() { return scriptApproval }
+    def getScriptApproval() { return scriptApproval }
 
     def getConfig() { return config }
 
