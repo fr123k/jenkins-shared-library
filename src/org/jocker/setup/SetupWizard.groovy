@@ -5,10 +5,12 @@ import jenkins.model.Jenkins
 class SetupWizard implements Serializable {
     def config
     def cascPlugin
+    def credsUtil
     def scriptApproval
     SetupWizard(config) {
         this.config = config
         this.scriptApproval = new ScriptApprovalUtils()
+        this.credsUtil = new CredentialsUtil()
         this.cascPlugin = new CascPlugin(config, '/var/jenkins_home/casc-config/')
     }
     def setup() {
@@ -34,6 +36,7 @@ class SetupWizard implements Serializable {
 
     def getCascPlugin() { return cascPlugin }
     def getScriptApproval() { return scriptApproval }
+    def getCredsUtil() { return credsUtil }
 
     def getConfig() { return config }
 
