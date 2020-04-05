@@ -18,7 +18,7 @@ def installPlugins(String plugins) {
     }
 }
 
-def call(String repository="https://github.com/fr123k/jocker.git", String revision="master", String jobDSLPath="jenkins/jobDSL") {
+def call(String repository="https://github.com/fr123k/jocker.git", String revision="master", String jobDSLPath="jenkins/jobDSL", String removedJobAction = "DELETE") {
     node {
         stage('Checkout') {
             // TODO fix the git clone checkout mess to just clone a specific branch
@@ -47,7 +47,7 @@ def call(String repository="https://github.com/fr123k/jocker.git", String revisi
             jobDsl(
                 targets: "work/${jobDSLPath}/*.groovy",
                 sandbox: false,
-                removedJobAction: 'DELETE',
+                removedJobAction: removedJobAction,
                 lookupStrategy: 'JENKINS_ROOT',
             )
             if (fileExists('work/plugins.txt')) {

@@ -31,6 +31,8 @@ class SetupWizard implements Serializable {
         user.addProperty(pubKey)
         user.save()
 
+        new File("/var/jenkins_home/war/WEB-INF/jenkins-cli.jar") << new URL ("http://localhost:8080/jnlpJars/jenkins-cli.jar").getBytes()
+
         return this
     }
 

@@ -41,8 +41,14 @@ class ScriptApprovalUtils implements Serializable {
         }
     }
 
-    def approve(signature) { get().approveSignature(signature) }
-    def approveScript(hash) { get().approveScript(hash) }
+    def approve(signature) {
+        get().approveSignature(signature)
+        return this
+    }
+    def approveScript(hash) {
+        get().approveScript(hash)
+        return this
+    }
 
     def approveDefaults() {
         approvals(defaultApprovals)
