@@ -24,12 +24,16 @@ def call(String repository="https://github.com/fr123k/jocker.git", String revisi
             // TODO fix the git clone checkout mess to just clone a specific branch
             cleanWs()
             // git clone --branch ${arguments.revision} https://github.com/fr123k/jocker.git work --depth 1
-            sh """
-            git clone ${repository} work
-            cd work
-            git checkout ${revision}
-            cd ..
-            """
+            git branch: revision,
+                credentialsId:'deploy-key-shared-library',
+                url: repository
+
+            // sh """
+            // git clone ${repository} work
+            // cd work
+            // git checkout ${revision}
+            // cd ..
+            // """
         }
         stage("Create jobs") {
             sh """
