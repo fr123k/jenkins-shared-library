@@ -40,12 +40,14 @@ def call(String repository="https://github.com/fr123k/jocker.git", String revisi
                 // https://issues.jenkins-ci.org/browse/JENKINS-44142
                 // --> Note: when using multiple Job DSL build steps in a single job, set this to "Delete" only for the last Job DSL build step. 
                 // Otherwise views may be deleted and re-created. See JENKINS-44142 for details.
-                jobDsl(
-                    targets: "${jobDSLPath}/folders.groovy",
-                    sandbox: false,
-                    removedJobAction: 'IGNORE',
-                    lookupStrategy: 'JENKINS_ROOT'
-                )
+                if (fileExists("${jobDSLPath}/folders.groovy")) {
+                    jobDsl(
+                        targets: "${jobDSLPath}/folders.groovy",
+                        sandbox: false,
+                        removedJobAction: 'IGNORE',
+                        lookupStrategy: 'JENKINS_ROOT'
+                    )
+                }
                 jobDsl(
                     targets: "${jobDSLPath}/*.groovy",
                     sandbox: false,
