@@ -59,6 +59,9 @@ def call(String repository="https://github.com/fr123k/jocker.git", String revisi
                     plugins = readFile "plugins.txt"
                     installPlugins(plugins)
                 }
+                if (fileExists('jenkins/setup.groovy')) {
+                    load('jenkins/config/groovy/setup.groovy')
+                }
             }
         }
     }
