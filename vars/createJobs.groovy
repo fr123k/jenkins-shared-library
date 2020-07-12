@@ -24,7 +24,7 @@ def call(String repository="https://github.com/fr123k/jocker.git", String revisi
             // TODO fix the git clone checkout mess to just clone a specific branch
             cleanWs()
             dir('work') {
-                if (revision.contains("/"))
+                if (revision.startsWith("origin/"))
                     revision = revision.split("/", 2)[1]
 
                 git branch: revision,
@@ -60,7 +60,10 @@ def call(String repository="https://github.com/fr123k/jocker.git", String revisi
                     installPlugins(plugins)
                 }
                 if (fileExists('jenkins/setup.groovy')) {
-                    load('jenkins/config/groovy/setup.groovy')
+                    def args=[:]
+                    args.workspace = workspace + "/work"
+                    def setup = load('jenkins/setup.groovy')
+                    setup(args)
                 }
             }
         }
