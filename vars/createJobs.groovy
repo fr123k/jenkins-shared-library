@@ -18,7 +18,7 @@ def installPlugins(String plugins) {
     }
 }
 
-def call(String repository="https://github.com/fr123k/jocker.git", String revision="master", String jobDSLPath="jenkins/jobDSL", String removedJobAction = "DELETE") {
+def call(String repository="https://github.com/fr123k/jocker.git", String revision="master", String credentialsId="deploy-key-shared-library", String jobDSLPath="jenkins/jobDSL", String removedJobAction = "DELETE") {
     node {
         stage('Checkout') {
             // TODO fix the git clone checkout mess to just clone a specific branch
@@ -28,7 +28,7 @@ def call(String repository="https://github.com/fr123k/jocker.git", String revisi
                     revision = revision.split("/", 2)[1]
 
                 git branch: revision,
-                    credentialsId:'deploy-key-shared-library',
+                    credentialsId: credentialsId,
                     url: repository
             }
         }
