@@ -6,12 +6,14 @@ class SetupWizard implements Serializable {
     def config
     def cascPlugin
     def credsUtil
+    def location
     def scriptApproval
     SetupWizard(config) {
         this.config = config
         this.scriptApproval = new ScriptApprovalUtils()
         this.credsUtil = new CredentialsUtil()
         this.cascPlugin = new CascPlugin(config, '/var/jenkins_home/casc-config/')
+        this.location = new JenkinsLocation()
     }
     def setup() {
         // scriptApproval.approveDefaultScripts()
@@ -36,6 +38,7 @@ class SetupWizard implements Serializable {
         return this
     }
 
+    def getJenkinsLocation() { return location }
     def getCascPlugin() { return cascPlugin }
     def getScriptApproval() { return scriptApproval }
     def getCredsUtil() { return credsUtil }
